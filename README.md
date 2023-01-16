@@ -5,14 +5,14 @@
 ![image](https://user-images.githubusercontent.com/17432146/212719950-af943e9e-4507-43e4-87f4-40a7e6569e6e.png)
 
 
-As shown in the UML diagram I have have Tariff abstract class with BasicTariff and PackageTariff as subclasses. I made the Tariff class an abstract rather than an interface becuase I want to add implementation to ToString method for logging purpose and rather than adding it in all subsclasses it is much better to be inside the parent class.
+The UML diagram illustrates the use of an abstract Tariff class, with BasicTariff and PackageTariff as subclasses. The Tariff class was implemented as an abstract class in order to add an implementation for the ToString method for logging purposes. We can have an interface and add ToString in each subclass but it will be repetitive. 
 
-And also I have separate attributes in both subclass I didn't add them in parent class because if we were to add another tariff as subclass and they don't have these as an attribute it will violate Interface Segrgation principle of SOLID principle.
+ Additionally, the subclasses have separate attributes, which were not included in the parent class. Because if they are included in the parent class and added a new tariff that doesn't have those attributes that would violate the Interface Segregation principle of the SOLID design principles.
 
 
 **Using factory method design principle**
 
-On this scenario we only have two tariff products but in the future we might want to add another tariff products and also rather than creating each instance of tariff directly using new keywork it will make our application tightly coulpled if we use factory to create instances.
+The factory method design principle is also utilized in this scenario. While currently only two tariff products are present, the implementation allows for the possibility of adding additional tariff products in the future. Additionally, using a factory method to create instances of tariffs rather than directly using the "new" keyword helps to mitigate the risk of tight coupling within the application.
 
 ![image](https://user-images.githubusercontent.com/17432146/212721921-fe87cade-9d18-46a2-9823-097b83dd6736.png)
 
