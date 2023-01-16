@@ -9,46 +9,54 @@ using Xunit;
 
 namespace TariffComparison.UnitTests.Core.Entities
 {
-    public class ProductATest
+    public class TariffPackageTest
     {
 
-        [Fact]
-        public void ProductA_CalculatesAnnualCost_ReturnsCorrectValue()
+        [Theory]
+        [InlineData(4000, 800)]
+        [InlineData(3500, 800)]
+        [InlineData(4500, 950)]
+        [InlineData(6000, 1400)]
+        public void CalculatesAnnualCost_Should_Return_CorrectValue(double consumption, double expected)
         {
             // Arrange
-            var productA = new BasicTariff { AnnualCost = 6000 };
+            var TariffPackage = new PackageTariff(consumption);
 
             // Act
-            var result = productA.AnnualCost;
+            var result = TariffPackage.AnnualCost;
 
             // Assert
-            result.Should().Be(1380);
+            result.Should().Be(expected);
+        }
+
+        [Theory]
+        [InlineData(4500, 800)]
+        [InlineData(900, 8864)]
+        [InlineData(8000, 1600)]
+        [InlineData(7845, 456)]
+        public void CalculatesAnnualCost_Should_Return_InCorrectValue(double consumption, double expected)
+        {
+            // Arrange
+            var TariffPackage = new PackageTariff(consumption);
+
+            // Act
+            var result = TariffPackage.AnnualCost;
+
+            // Assert
+            result.Should().NotBe(expected);
         }
 
         [Fact]
-        public void ProductA_CalculatesAnnualCost_ReturnsInCorrectValue()
+        public void NamePropertyIsSet()
         {
             // Arrange
-            var productA = new BasicTariff { AnnualCost = 6000 };
+            var TariffPackage = new PackageTariff();
 
             // Act
-            var result = productA.AnnualCost;
+            var result = TariffPackage.Name;
 
             // Assert
-            result.Should().NotBe(380);
-        }
-
-        [Fact]
-        public void ProductA_NamePropertyIsSet()
-        {
-            // Arrange
-            var productA = new BasicTariff();
-
-            // Act
-            var result = productA.Name;
-
-            // Assert
-            result.Should().Be("basic electricity tariff");
+            result.Should().Be("Packaged tariff");
         }
     }
 }

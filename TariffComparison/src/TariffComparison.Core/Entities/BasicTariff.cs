@@ -13,12 +13,19 @@ namespace TariffComparison.Core.Entities
         private const double MONTHLY_COST = 5;
         private const int MONTHS_IN_YEAR = 12;
         private const double CONSUMPUTION_COSTS = 0.22;
-        public string Name { set; get; } = "basic electricity tariff";
-        private double annualCost;
-        public double AnnualCost
+
+        public BasicTariff()
         {
-            get { return MONTHLY_COST * MONTHS_IN_YEAR + (this.annualCost * CONSUMPUTION_COSTS); }
-            set { this.annualCost = value; }
+        }
+
+        public BasicTariff(double consumption)
+        {
+            Consumption = consumption;
+        }
+        public override string Name { get; } = "basic electricity tariff";
+        public override double AnnualCost
+        {
+            get { return MONTHLY_COST * MONTHS_IN_YEAR + (this.Consumption * CONSUMPUTION_COSTS); }
         }
     }
 }

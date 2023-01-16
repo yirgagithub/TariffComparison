@@ -1,62 +1,55 @@
 ﻿using TariffComparison.Core.Entities;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace TariffComparison.UnitTests.Core.Entities
 {
-    public class ProductBTest
+    public class TariffBasicTest
     {
 
         [Theory]
-        [InlineData(4000, 800)]
-        [InlineData(900, 8864)]
-        [InlineData(8000, 1600)]
-        [InlineData(7845, 456)]
-        public void ProductB_CalculatesAnnualCost_ReturnsCorrectValue(double consumption, double expected)
+        [InlineData(3500, 830)]
+        [InlineData(4500, 990)]
+        [InlineData(6000, 1380)]
+        public void TariffBasic_CalculatesAnnualCost_ReturnsCorrectValue(double consumption, double expected)
         {
             // Arrange
-            var productB = new PackageTariff { AnnualCost = consumption };
+            var TariffBasic = new BasicTariff(consumption);
 
             // Act
-            var result = productB.AnnualCost;
+            var result = TariffBasic.AnnualCost;
 
             // Assert
             result.Should().Be(expected);
         }
 
         [Theory]
-        [InlineData(4500, 800)]
-        [InlineData(900, 8864)]
-        [InlineData(8000, 1600)]
-        [InlineData(7845, 456)]
-        public void ProductB_CalculatesAnnualCost_ReturnsInCorrectValue(double consumption, double expected)
+        [InlineData(3500, 800)]
+        [InlineData(4500, 950)]
+        [InlineData(6000, 1400)]
+        public void TariffBasic_CalculatesAnnualCost_ReturnsInCorrectValue(double consumption, double expected)
         {
             // Arrange
-            var productB = new PackageTariff { AnnualCost = consumption };
+            var TariffBasic = new BasicTariff(consumption);
 
             // Act
-            var result = productB.AnnualCost;
+            var result = TariffBasic.AnnualCost;
 
             // Assert
             result.Should().NotBe(expected);
         }
 
         [Fact]
-        public void ProductB_NamePropertyIsSet()
+        public void NamePropertyIsSet()
         {
             // Arrange
-            var productB = new PackageTariff();
+            var TariffBasic = new BasicTariff();
 
             // Act
-            var result = productB.Name;
+            var result = TariffBasic.Name;
 
             // Assert
-            result.Should().Be("Packaged tariff");
+            result.Should().Be("basic electricity tariff");
         }
     }
 }

@@ -11,14 +11,16 @@ namespace TariffComparison.Core.Services
     public class TariffsComparison: ITariffComparison
     {
 
+        // Create tariffs using tariff factory
+        // Order the tariffs by their AnnualCost
         public List<Tariff> CompareTariffs(double consumption)
         {
-            var basic = TariffFactory.CreateProducts(TariffType.Basic, consumption );
-            var package = TariffFactory.CreateProducts(TariffType.Packaged, consumption);
+            var basic = TariffFactory.CreateTariffs(TariffType.Basic, consumption );
+            var package = TariffFactory.CreateTariffs(TariffType.Packaged, consumption);
            
-            var products = new List<Tariff> { basic, package };
+            var tariffs = new List<Tariff> { basic, package };
 
-            return products.OrderBy(p => p.AnnualCost).ToList();
+            return tariffs.OrderBy(p => p.AnnualCost).ToList();
         }
     }
 }

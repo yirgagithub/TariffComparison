@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace TariffComparison.Core.Entities
 {
+    // A factory class to create tariff types based on the tariff type passed an an argument
+    // If invalid tariff type given it will throw an Exception
     public class TariffFactory 
     {
-        public static Tariff CreateProducts(TariffType type, double consumption)
+        public static Tariff CreateTariffs(TariffType type, double consumption)
         {
            switch(type){
                 case TariffType.Basic:
-                    return new BasicTariff{ AnnualCost = consumption };
+                    return new BasicTariff(consumption);
                 case TariffType.Packaged:
-                    return new PackageTariff { AnnualCost = consumption };
+                    return new PackageTariff(consumption);
                 default:
-                     throw new Exception("Invalid value type for createProducts ProductFactory");
+                     throw new Exception("Invalid value type for CreateTariffs TariffFactory");
             }
         }
     }

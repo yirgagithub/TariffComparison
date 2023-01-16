@@ -1,11 +1,6 @@
 ﻿using TariffComparison.Core.Entities;
-using TariffComparison.Core.Interfaces;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace TariffComparison.UnitTests.Core.helpers
@@ -15,13 +10,13 @@ namespace TariffComparison.UnitTests.Core.helpers
         [Theory]
         [InlineData(TariffType.Basic)]
         [InlineData(TariffType.Packaged)]
-        public void Test_CreateProducts_ValidInput_(TariffType type)
+        public void CreateProducts_Should_Return_ValidTariff_When_Valid_TarrifType(TariffType type)
         {
             // Arrange
             var consumption = 1000.0;
 
             // Act
-            var product = TariffFactory.CreateProducts(type, consumption);
+            var product = TariffFactory.CreateTariffs(type, consumption);
 
             // Assert
             if (type == TariffType.Basic)
@@ -31,14 +26,14 @@ namespace TariffComparison.UnitTests.Core.helpers
         }
 
         [Fact]
-        public void Test_CreateProducts_InvalidInput()
+        public void CreateProducts_Should_Throw_Exception_When_InValid_TarrifType()
         {
             // Arrange
             var consumption = 1000.0;
             var invalidType = (TariffType)100;
 
             // Act and Assert
-            Action ex = () => TariffFactory.CreateProducts(invalidType, consumption);
+            Action ex = () => TariffFactory.CreateTariffs(invalidType, consumption);
             ex.Should().Throw<Exception>();
            
         }

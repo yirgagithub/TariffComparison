@@ -21,6 +21,8 @@ namespace TariffComparison.Web.Api
             _validator = validator;
         }
 
+        // validates the input using fluent validation if error it returns BadRequest
+        // if valid it will get products from _tariffComparisonService  
         // GET: api/tarrifcomparison
         [HttpGet("{consumption:double}")]
         public IActionResult GetProductsByConsumption( double consumption)

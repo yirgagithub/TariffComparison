@@ -1,19 +1,12 @@
 ﻿using AutoFixture;
 using TariffComparison.Core.Interfaces;
-using TariffComparison.Core.Entities;
 using TariffComparison.Web.Api;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
-using TariffComparison.Core.Validation;
 using FluentValidation;
-using System.ComponentModel.DataAnnotations;
 using FluentValidation.Results;
 
 namespace TarrifComparison.Controller
@@ -34,21 +27,10 @@ namespace TarrifComparison.Controller
             _controller = new TarrifComparisonController(_mockTariffComparisonService.Object, _mockValidator.Object);
         }
 
-        [Fact]
-        public void GetProductsByConsumption_InvokeTariffComparissonService()
-        {
-            // Arrange
-            var consumption = _fixture.Create<double>();
-            _mockTariffComparisonService.Setup(x => x.GetProducts(consumption))
-                 .Returns(new List<Tariff>());
-            _mockValidator.Setup(x => x.Validate(consumption)).Returns(new FluentValidation.Results.ValidationResult());
-            // Act
-            var result =  _controller.GetProductsByConsumption(consumption);
-            _mockTariffComparisonService.Verify(_service => _service.GetProducts(consumption), Times.Once);
-        }
+
 
         [Fact]
-        public void GetProductsByConsumption_ReturnsOkResult()
+        public void GetProductsByConsumption_Should_Return_OkObjectResult_When_Valid_Consumption()
         {
             // Arrange
             var consumption = _fixture.Create<double>();
@@ -57,7 +39,7 @@ namespace TarrifComparison.Controller
             _mockValidator.Setup(x => x.Validate(consumption)).Returns(new FluentValidation.Results.ValidationResult());
 
             // Act
-            var result =  _controller.GetProductsByConsumption(consumption);
+            var result = _controller.GetProductsByConsumption(consumption);
 
             // Assert
             result.Should().BeOfType<OkObjectResult>();
@@ -65,7 +47,7 @@ namespace TarrifComparison.Controller
         }
 
         [Fact]
-        public void GetProductsByConsumption_ReturnsBadRequest()
+        public void GetProductsByConsumption_Should_Return_BadRequestObjectResult_When_InValid_Consumption()
         {
             // Arrange
             var consumption = 0;
@@ -83,6 +65,38 @@ namespace TarrifComparison.Controller
             result.Should().BeOfType<BadRequestObjectResult>();
 
         }
+
+        [Fact]
+        public void GetProductsByConsumption_Should_Verify_TariffComparisonServiceCalledOnce_When_Valid_Consumption()
+        {
+            // Arrange
+            var consumption = _fixture.Create<double>();
+            _mockTariffComparisonService.Setup(x => x.GetProducts(consumption))
+                 .Returns(new List<Tariff>());
+            _mockValidator.Setup(x => x.Validate(consumption)).Returns(new FluentValidation.Results.ValidationResult());
+            // Act
+            var result = _controller.GetProductsByConsumption(consumption);
+            _mockTariffComparisonService.Verify(_service => _service.GetProducts(consumption), Times.Once);
+        }
+
+        [Fact]
+        public void GetProductsByConsumption_Should_Verify_TariffComparisonServiceNeverCalled_When_InValid_Consumption()
+        {
+            // Arrange
+            var consumption = 0;
+            _mockTariffComparisonService.Setup(x => x.GetProducts(consumption))
+                 .Returns(new List<Tariff>());
+            var validationError = new ValidationFailure { PropertyName = "Consumption", ErrorMessage = "Consumption must be greater than zero" };
+            List<ValidationFailure> list = new List<ValidationFailure> { validationError };
+            _mockValidator.Setup(x => x.Validate(consumption))
+                .Returns(new FluentValidation.Results.ValidationResult(list));
+
+            // Act
+            var result = _controller.GetProductsByConsumption(consumption);
+            _mockTariffComparisonService.Verify(_service => _service.GetProducts(consumption), Times.Never);
+        }
+
+
     }
 
 }

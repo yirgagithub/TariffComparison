@@ -13,12 +13,19 @@ namespace TariffComparison.Core.Entities
         private const double THRESHOLD_CONSUMPTION_VALUE = 4000;
         private const double THRESHOLD_CONSUMPTION_PRICE = 800;
         private const double CONSUMPUTION_COSTS = 0.3;
-        public string Name { set; get; } = "Packaged tariff";
-        private double annualCost;
-        public double AnnualCost
+
+        public PackageTariff()
         {
-            get { return (this.annualCost <= THRESHOLD_CONSUMPTION_VALUE) ? THRESHOLD_CONSUMPTION_PRICE : (THRESHOLD_CONSUMPTION_PRICE + (this.annualCost - THRESHOLD_CONSUMPTION_VALUE) * CONSUMPUTION_COSTS); }
-            set { this.annualCost = value; }
+        }
+
+        public PackageTariff(double consumption)
+        {
+            Consumption = consumption;
+        }
+        public override string Name {get; } = "Packaged tariff";
+        public override double AnnualCost
+        {
+            get { return (this.Consumption <= THRESHOLD_CONSUMPTION_VALUE) ? THRESHOLD_CONSUMPTION_PRICE : (THRESHOLD_CONSUMPTION_PRICE + (this.Consumption - THRESHOLD_CONSUMPTION_VALUE) * CONSUMPUTION_COSTS); }
         }
     }
 }
