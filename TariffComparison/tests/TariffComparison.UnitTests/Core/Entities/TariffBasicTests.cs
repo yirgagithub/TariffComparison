@@ -9,7 +9,7 @@ namespace TariffComparison.UnitTests.Core.Entities
 
         [Theory]
         [InlineData(3500, 830)]
-        [InlineData(4500, 990)]
+        [InlineData(4500, 1050)]
         [InlineData(6000, 1380)]
         public void TariffBasic_CalculatesAnnualCost_ReturnsCorrectValue(double consumption, double expected)
         {
