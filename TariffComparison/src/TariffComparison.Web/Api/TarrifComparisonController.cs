@@ -13,12 +13,10 @@ namespace TariffComparison.Web.Api
     public class TarrifComparisonController : BaseApiController
     {
         private readonly ITariffComparisonService _tariffComparisonService;
-        private readonly IValidator<double> _validator;
 
-        public TarrifComparisonController(ITariffComparisonService tariffComparisonService, IValidator<double> validator)
+        public TarrifComparisonController(ITariffComparisonService tariffComparisonService)
         {
             _tariffComparisonService = tariffComparisonService;
-            _validator = validator;
         }
 
         // validates the input using fluent validation if error it returns BadRequest
@@ -27,10 +25,6 @@ namespace TariffComparison.Web.Api
         [HttpGet("{consumption:double}")]
         public IActionResult GetProductsByConsumption( double consumption)
         {
-            var validators = _validator.Validate(consumption);
-            if (validators == null || !validators.IsValid)
-                return BadRequest(validators != null ? validators.Errors : "Error in consumption");
-
             var result = _tariffComparisonService.GetProducts(consumption);
             return Ok(result);
         }

@@ -14,7 +14,7 @@ namespace TariffComparison.UnitTests.Core.Services
     public class TariffComparisonTests
     {
         [Fact]
-        public void Test_CompareTariffs_ValidInput()
+        public void CompareTariffs_Should_ReturnBasicAndPackageTariff_When_Valid_Consumption()
         {
             // Arrange
             var consumption = 1000.0;
@@ -32,7 +32,7 @@ namespace TariffComparison.UnitTests.Core.Services
         }
 
         [Fact]
-        public void Test_CompareTariffs_DifferentConsumptions()
+        public void CompareTariffs_Should_Return_OrderedList_When_Valid_Consumption()
         {
             // Arrange
             var tariffComparison = new TariffsComparison();
@@ -52,7 +52,7 @@ namespace TariffComparison.UnitTests.Core.Services
 
 
         [Fact]
-        public void Test_CompareTariffs_EdgeCases()
+        public void CompareTariffs_Should_Return_TwoTariff_When_Valid_Consumption()
         {
             // Arrange
             var tariffComparison = new TariffsComparison();

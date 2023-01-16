@@ -11,14 +11,21 @@ namespace TariffComparison.Core.Services
     public class TariffComparisonService : ITariffComparisonService
     {
         private ITariffComparison _comparison;
+        private readonly IValidator<double> _validator;
 
-        public TariffComparisonService(ITariffComparison comparison)
+        public TariffComparisonService(ITariffComparison comparison, IValidator<double> validator)
         {
             _comparison = comparison;
+            _validator = validator;
         }
 
         public List<Tariff> GetProducts(double consumption)
         {
+            var validators = _validator.Validate(consumption);
+            if (validators == null || !validators.IsValid)
+            {
+               throw new Exception("Consumption should be greater than zero");
+            }
             return _comparison.CompareTariffs(consumption);
         }
     }

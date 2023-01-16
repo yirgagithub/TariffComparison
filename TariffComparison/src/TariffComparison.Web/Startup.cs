@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
+using TariffComparison.Core.middleware;
 
 namespace TariffComparison.Web
 {
@@ -38,8 +39,8 @@ namespace TariffComparison.Web
             });
 
             services.AddScoped<IValidator<double>, ConsumptionValidation>();
-            services.AddSingleton<ITariffComparison, TariffsComparison>();
-            services.AddSingleton<ITariffComparisonService, TariffComparisonService>();
+            services.AddScoped<ITariffComparison, TariffsComparison>();
+            services.AddScoped<ITariffComparisonService, TariffComparisonService>();
 
             // add list services for diagnostic purposes 
             services.Configure<ServiceConfig>(config =>
@@ -64,6 +65,7 @@ namespace TariffComparison.Web
             }
             app.UseRouting();
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
