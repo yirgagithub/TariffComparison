@@ -22,6 +22,8 @@ As show in the image we are creating new instances using a factory method.
 
 ![image](https://user-images.githubusercontent.com/17432146/212724776-8a83d7c9-9359-4c6b-979e-2343a2613b5f.png)
 
-● In Controller: Class the TariffComparisonService
+● In Controller: Class the TariffComparisonService.
+
 ● In TariffComparisonService: It validates the consumption using fluent validation. If succes it wil call TariffComparison class if not it will throw an Exception(It will be handled by ErrorHandlingMiddleware).
+
 ● In TariffComparison: it will use TariffType to create instance using TariffFactory class. After that it will sort the list by the AnnualCost and return ordered list. If invalid TariffType passed it will throw an Exceptoin
