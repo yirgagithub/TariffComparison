@@ -27,3 +27,11 @@ As show in the image we are creating new instances using a factory method.
 ● In TariffComparisonService: It validates the consumption using fluent validation. If succes it wil call TariffComparison class if not it will throw an Exception(It will be handled by ErrorHandlingMiddleware).
 
 ● In TariffComparison: it will use TariffType to create instance using TariffFactory class. After that it will sort the list by the AnnualCost and return ordered list. If invalid TariffType passed it will throw an Exceptoin
+
+
+**You can use Swagger to test**
+
+![image](https://user-images.githubusercontent.com/17432146/212743391-cb41b5cd-42c6-41ab-ba3f-15e8c92134fe.png)
+
+
+**Requirement this repo uses dotnet core 5**
