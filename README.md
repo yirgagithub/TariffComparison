@@ -8,9 +8,9 @@
 
 **Model design reasoning** 
 
-All tariffs will have a name, consumption, and annual cost. But not all tariffs have consumption cost per kwh or base cost as an example a flat tariff doesn't have consumption cost per kwh. Other tariffs may have a different calculation model, such as a time-of-use tariff, where the cost changes depending on the time of day or the day of the week when the energy is consumed. 
+All tariffs will have a name, consumption, and annual cost. But not all tariffs have consumption cost per kwh or threshold consumption cost as an example a flat tariff doesn't have consumption cost per kwh. Other tariffs may have a different calculation model, such as a time-of-use tariff, where the cost changes depending on the time of day or the day of the week when the energy is consumed. 
 
-So it  make so much sense to put these attributes(CONSUMPTION_COST, BASE_COST) in subclass than parent. Even if I put them in parent class now and wanted to add new tariffs in the future we have to update our parent class Tariff or it will violate the I(Interface Segregation principle) in the SOLID design principles.
+So it  make so much sense to put these attributes(CONSUMPTION_COST,  THRESHOLD_COSUMPTION_COST) in subclass than parent. Even if I put them in parent class now and wanted to add new tariffs in the future we have to update our parent class Tariff or it will violate the I(Interface Segregation principle) in the SOLID design principles.
 
 
 The UML diagram illustrates the use of an abstract Tariff class, with BasicTariff and PackageTariff as subclasses. The Tariff class was implemented as an abstract class in order to add an implementation for the ToString method for logging purposes. We can have an interface and add ToString in each subclass but it will be repetitive. 
